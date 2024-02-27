@@ -14,7 +14,8 @@ export interface IProduct
 const productSchema = new Schema<IProduct>({
     name: {
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     summary: {
         type:String,
@@ -32,10 +33,7 @@ const productSchema = new Schema<IProduct>({
         type:Number,
         required:true
     },
-    priceTxt: {
-        type:String,
-        required: true
-    }
+    priceTxt: String
 })
 
 
