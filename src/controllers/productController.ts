@@ -4,7 +4,7 @@ import handle from 'express-async-handler';
 
 export const getAllProducts = handle (async (req:Request, res:Response) : Promise<void> =>
 {
-    const products = await Product.find ();
+    const products = await Product.find (req.query);
 
     res.status (200).json ({
         status: 'success',
