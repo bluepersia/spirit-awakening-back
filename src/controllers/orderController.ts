@@ -6,8 +6,8 @@ export const createPayPalOrder = handle (async (req:Request, res:Response) : Pro
 {
     try {
         // use the cart information passed from the front-end to calculate the order amount detals
-        const cart = req.body;
-        const { jsonResponse, httpStatusCode } = await createOrder(cart);
+        const {email, order}  = req.body;
+        const { jsonResponse, httpStatusCode } = await createOrder(email, order);
         
         res.status(httpStatusCode).json(jsonResponse);
       } catch (error) {
