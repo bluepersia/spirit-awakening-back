@@ -33,7 +33,7 @@ const generateAccessToken = async () => {
       "shopping cart information passed from the frontend createOrder() callback:",
       cart,
     );
-    const totalPrice = cart.reduce ((prev, curr) => prev + curr.price, 0);
+    const totalPrice = cart.reduce ((prev, curr) => prev + curr.price, 0).toFixed (2);
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
     const payload = {
