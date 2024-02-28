@@ -27,13 +27,13 @@ const generateAccessToken = async () => {
   };
 
 
-  export const createOrder = async (cart:IProduct[]) => {
+  export const createOrder = async (email:string, order:IProduct[]) => {
     // use the cart information passed from the front-end to calculate the purchase unit details
     console.log(
       "shopping cart information passed from the frontend createOrder() callback:",
-      cart,
+      order,
     );
-    const totalPrice = cart.reduce ((prev, curr) => prev + curr.price, 0).toFixed (2);
+    const totalPrice = order.reduce ((prev, curr) => prev + curr.price, 0).toFixed (2);
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
     const payload = {
@@ -47,13 +47,18 @@ const generateAccessToken = async () => {
                 item_total: { value: totalPrice, currency_code: 'EUR'}
             }
           },
-          items: cart.map (product => ({
+          items: order.map (product => ({
             name: product.name,
             quantity: 1,
             unit_amount: { value: product.price, currency_code: 'EUR'}
           }))
         },
       ],
+      payment_source: {
+        paypal: {
+          email_address: email
+        }
+      }
     };
     const response = await fetch(url, {
         headers: {
